@@ -1,5 +1,4 @@
 "use client";
-import { useEffect, useRef } from "react";
 import NamesTogetherContainer from "./containers/NamesTogetherContainer";
 import LoveTextContainer from "./containers/LoveTextContainer";
 import PlacesContainer from "./containers/PlacesContainer";

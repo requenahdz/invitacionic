@@ -10,7 +10,7 @@ import g6 from '../assets/g6.jpg'; // Importa la imagen
 import Image from 'next/image';
 
 function GalleryContainer() {
-  var settings = {
+  const settings = {
     dots: false,
     infinite: true,
     speed: 1000,
