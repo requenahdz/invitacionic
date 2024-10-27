@@ -3,6 +3,8 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 import React, { useState } from 'react';
 import axios from 'axios';
 import imgMessage from '../assets/message.png'; // Importa la imagen
+import imgGraciasQR from '../assets/gracias.png'; // Importa la imagen
+
 import Image from 'next/image';
 
 const BASE_URL = 'https://robertorequena.mx/api/A007/guests';
@@ -51,10 +53,11 @@ function FormConfirmationContainer() {
   };
 
   const handleSave = async () => {
+    handleClose()
+    handleOpenImg();
     try {
       const response = await axios.post(BASE_URL, data);
-      handleClose()
-      handleOpenImg();
+      setData(INIT)
       return response.data; // Se asume que la respuesta contiene un `data` con los datos que necesitas
     } catch (error) {
       handleClose()
@@ -67,21 +70,19 @@ function FormConfirmationContainer() {
     open: boolean;
     onClose: () => void;
   }
-  
+
   const ImageDialog: React.FC<ImageDialogProps> = ({ open, onClose }) => {
     return (
       <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
         <DialogContent>
-          <Image src={imgMessage} alt="Dialog" />
+          <Image src={data.guest ? imgMessage : imgGraciasQR} alt="Dialog" />
         </DialogContent>
       </Dialog>
     );
   };
-  
+
   return (
     <section>
-
-
       <div className="m-auto shadow-md rounded-lg bg-white flex w-80 cursor-pointer my-5" onClick={handleClickOpen}>
         <p className="font-semibold p-3 text-center w-full">Confirma tu asistencia</p>
       </div>
@@ -91,10 +92,10 @@ function FormConfirmationContainer() {
         <DialogContent>
           <Typography className="text-red-700">Evento no permitido con niños</Typography>
           <DialogContentText>
-            <form className="bg-white p-5 grid gap-3 w-80">
-              <TextField  size="small"  label="Nombre(s)" variant="outlined" value={data.name} onChange={handleChange('name')} />
-              <TextField size="small"  label="Correo" type="email" variant="outlined" value={data.email} onChange={handleChange('email')} />
-              <TextField size="small"  label="Teléfono" variant="outlined" value={data.phone} onChange={handleChange('phone')} />
+            <form className="bg-white p-5 grid gap-3 w-72">
+              <TextField size="small" label="Nombre(s)" variant="outlined" value={data.name} onChange={handleChange('name')} />
+              <TextField size="small" label="Correo" type="email" variant="outlined" value={data.email} onChange={handleChange('email')} />
+              <TextField size="small" label="Teléfono" variant="outlined" value={data.phone} onChange={handleChange('phone')} />
 
               <FormControl fullWidth>
                 <InputLabel>Invitados confirmados</InputLabel>
@@ -103,7 +104,7 @@ function FormConfirmationContainer() {
                   label="Invitados confirmados"
                   onChange={handleChange('guest')}
                   value={data.guest}
-                  size="small" 
+                  size="small"
                 >
                   <MenuItem value={0}>No asistire</MenuItem>
                   <MenuItem value={1}>Un invitado</MenuItem>
@@ -111,19 +112,18 @@ function FormConfirmationContainer() {
               </FormControl>
 
               {data.guest ? (
-                <TextField size="small"  label="Nombre del invitado" variant="outlined" value={data.guest_name} onChange={handleChange('guest_name')} />
+                <TextField size="small" label="Nombre del invitado" variant="outlined" value={data.guest_name} onChange={handleChange('guest_name')} />
               ) : null}
 
-              <TextField  size="small"  label="Comentarios" variant="outlined" value={data.message} fullWidth
+              <TextField size="small" label="Comentarios" variant="outlined" value={data.message} fullWidth
                 margin="normal"
                 multiline
                 rows={2}
-                onChange={handleChange('message')} 
-              
-                />
+                onChange={handleChange('message')}
+
+              />
 
             </form>
-
 
           </DialogContentText>
         </DialogContent>

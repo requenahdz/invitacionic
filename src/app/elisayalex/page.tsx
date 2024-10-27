@@ -17,7 +17,7 @@ import AccommodationsContainer from "./containers/AccommodationsContainer";
 import MusicContainer from "./containers/MusicContainer";
 
 export default function Page() {
-  
+
 
     return (
         <main className="bg-[#f2f0f1]">
@@ -29,14 +29,14 @@ export default function Page() {
             <ParentsNamesContainer />
             <SpecialMentionsContainer />
             <GalleryContainer />
-            <FormConfirmationContainer/>
             <GiftTableContainer />
             <FilterContainer />
             <GoogleCalendarContainer />
+            <FormConfirmationContainer />
             <AccommodationsContainer />
             <ContactContainer />
             <NochildrenContainer />
-            <MusicContainer/>
+            <MusicContainer />
         </main>
     );
 }
