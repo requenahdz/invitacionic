@@ -21,7 +21,7 @@ function FormConfirmationContainer() {
     setOpen(false);
   };
 
-  const handleChange = (name: string) => (e: any) => {
+  const handleChange = (name: string) => (e: { target: { value: string | number }; }) => {
     const { value } = e.target;
     setData({
       ...data,

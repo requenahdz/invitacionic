@@ -8,7 +8,7 @@ import Image from 'next/image';
 
 function AccommodationsContainer() {
   // Configuración del slider
-  var settings = {
+  const settings = {
     dots: true,
     infinite: true,
     speed: 500,

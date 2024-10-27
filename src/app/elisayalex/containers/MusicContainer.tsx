@@ -1,9 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 const MusicContainer: React.FC = () => {
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const audioSrc: string = "/audio.mp3";
-    const [currentPlay, setCurrentPlay] = useState<boolean>(false);
 
     useEffect(() => {
 
@@ -35,20 +34,12 @@ const MusicContainer: React.FC = () => {
                 await audioRef.current.play();
                 console.error("Listo para reproducir");
 
-                setCurrentPlay(true);
+           
             } catch (error) {
                 console.error("No se pudo reproducir el audio:", error);
             }
         }
     };
-
-    const pauseAudio = () => {
-        if (audioRef.current) {
-            audioRef.current.pause();
-            setCurrentPlay(false);
-        }
-    };
-
 
 
     return (
