@@ -56,7 +56,7 @@ function FormConfirmationContainer() {
         <DialogContent>
           <Typography className="text-red-700">Evento no permitido con niños</Typography>
           <DialogContentText>
-            <form className="bg-white p-5 grid grid-cols-1 gap-3 min-w-[400px]">
+            <form className="bg-white p-5 grid gap-3 w-80">
               <TextField label="Nombre(s)" variant="outlined" value={data.name} onChange={handleChange('name')} />
               <TextField label="Correo" type="email" variant="outlined" value={data.email} onChange={handleChange('email')} />
               <TextField label="Teléfono" variant="outlined" value={data.phone} onChange={handleChange('phone')} />
