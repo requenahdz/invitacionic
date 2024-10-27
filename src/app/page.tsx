@@ -7,7 +7,6 @@ export default function Home() {
 
     <>
       <div className="bg-gray-100">
-        {/* Hero Section */}
         <section className="bg-cover bg-center h-screen flex items-center justify-center text-white"
           style={{ backgroundImage: "url('/your-background-image.jpg')" }}>
           <div className="text-center p-6 max-w-lg bg-opacity-70 bg-black rounded">
