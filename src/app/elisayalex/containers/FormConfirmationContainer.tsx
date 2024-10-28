@@ -1,11 +1,10 @@
-import { FormControl, IconButton, InputLabel, Select, TextField, Typography } from "@mui/material"
+import { FormControl, InputLabel, Select, TextField, Typography } from "@mui/material"
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, MenuItem } from '@mui/material';
 import React, { useState } from 'react';
 import axios from 'axios';
 import imgYesQr from '../assets/yesQr.png'; // Importa la imagen
 import imgNoQr from '../assets/noQr.png'; // Importa la imagen
 import Image from 'next/image';
-import CloseIcon from '@mui/icons-material/Close'; // Importa el ícono de cerrar
 import QRCode from "react-qr-code";
 const BASE_URL = 'https://robertorequena.mx/api/A007/guests';
 const INIT = {
