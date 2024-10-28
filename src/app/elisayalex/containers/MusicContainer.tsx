@@ -11,7 +11,7 @@ const MusicContainer: React.FC = () => {
         setTimeout(() => {
             console.log("Retrasado por 10 segundo.");
             playAudio()
-        }, 10000);
+        }, 5000);
 
 
         if (audioElement) {
