@@ -95,7 +95,7 @@ function FormConfirmationContainer() {
 
             {isQr && QRValue && (
               <div className="bg-white absolute ">
-                <QRCode value={QRValue} className="m-auto" width={400}/>
+                <QRCode value={QRValue} className="m-auto" width={200}/>
               </div>
             )}
           </div>
