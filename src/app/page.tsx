@@ -1,8 +1,19 @@
 "use client"
 
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
-
 export default function Home() {
+  const router = useRouter();
+  useEffect(() => {
+
+    const timeout = setTimeout(() => {
+      router.push("/elisayalex");
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, [router]);
+
   return (
 
     <>
@@ -25,27 +36,6 @@ export default function Home() {
             <p className="text-gray-700">
               Ofrecemos invitaciones personalizadas para hacer de tus momentos una experiencia inolvidable. Con materiales de alta calidad y diseño único, tus invitados estarán encantados desde el primer momento.
             </p>
-          </div>
-        </section>
-
-        {/* Gallery Section */}
-        <section className="py-12 bg-gray-200 px-6">
-          <div className="text-center mb-8">
-            <h2 className="text-4xl font-bold">Galería de Ejemplos</h2>
-            <p className="text-gray-700">Mira algunos de nuestros diseños exclusivos.</p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {/* Imagen de Ejemplo */}
-            <div className="relative w-full h-64 overflow-hidden rounded-lg shadow-lg">
-              <Image src="/example1.jpg" layout="fill" objectFit="cover" alt="Ejemplo 1" />
-            </div>
-            <div className="relative w-full h-64 overflow-hidden rounded-lg shadow-lg">
-              <Image src="/example2.jpg" layout="fill" objectFit="cover" alt="Ejemplo 2" />
-            </div>
-            <div className="relative w-full h-64 overflow-hidden rounded-lg shadow-lg">
-              <Image src="/example3.jpg" layout="fill" objectFit="cover" alt="Ejemplo 3" />
-            </div>
-            {/* Agrega más imágenes según necesites */}
           </div>
         </section>
       </div>

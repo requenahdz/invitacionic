@@ -2,8 +2,8 @@ import { FormControl, InputLabel, Select, TextField, Typography } from "@mui/mat
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, MenuItem } from '@mui/material';
 import React, { useState } from 'react';
 import axios from 'axios';
-import imgMessage from '../assets/message.png'; // Importa la imagen
-import imgGraciasQR from '../assets/gracias.png'; // Importa la imagen
+import imgYesQr from '../assets/yesQr.png'; // Importa la imagen
+import imgNoQr from '../assets/noQr.png'; // Importa la imagen
 
 import Image from 'next/image';
 
@@ -11,7 +11,7 @@ const BASE_URL = 'https://robertorequena.mx/api/A007/guests';
 const INIT = {
   name: '',
   email: '',
-  guest: '',
+  guest: 0,
   guest_name: '',
   phone: '',
   message: ''
@@ -45,8 +45,7 @@ function FormConfirmationContainer() {
     return (
       data.name.trim() !== '' &&
       data.email.trim() !== '' &&
-      data.guest &&
-      data.guest_name.trim() !== '' &&
+      (data.guest !== 1 || data.guest_name.trim() !== '') && // Valida guest_name solo si data.guest es 1
       data.phone.trim() !== '' &&
       data.message.trim() !== ''
     );
@@ -75,7 +74,9 @@ function FormConfirmationContainer() {
     return (
       <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
         <DialogContent>
-          <Image src={data.guest ? imgMessage : imgGraciasQR} alt="Dialog" />
+          {data.guest ?
+            <Image src={imgYesQr} alt="Dialog" /> :
+            <Image src={imgNoQr} alt="Dialog" />}
         </DialogContent>
       </Dialog>
     );
