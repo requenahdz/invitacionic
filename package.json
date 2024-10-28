@@ -21,6 +21,7 @@
     "react-audio-player": "^0.17.0",
     "react-dom": "19.0.0-rc-69d4b800-20241021",
     "react-h5-audio-player": "^3.9.3",
+    "react-qr-code": "^2.0.15",
     "react-slick": "^0.30.2",
     "slick-carousel": "^1.8.1"
   },

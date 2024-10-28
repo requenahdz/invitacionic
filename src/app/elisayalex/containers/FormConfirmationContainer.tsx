@@ -6,7 +6,7 @@ import imgYesQr from '../assets/yesQr.png'; // Importa la imagen
 import imgNoQr from '../assets/noQr.png'; // Importa la imagen
 import Image from 'next/image';
 import CloseIcon from '@mui/icons-material/Close'; // Importa el ícono de cerrar
-
+import QRCode from "react-qr-code";
 const BASE_URL = 'https://robertorequena.mx/api/A007/guests';
 const INIT = {
   name: '',
@@ -20,7 +20,7 @@ function FormConfirmationContainer() {
   const [open, setOpen] = useState<boolean>(false);
   const [data, setData] = useState(INIT)
   const [isQr, setIsQr] = useState(false);
-
+  const [QRValue, setQRValue] = useState('');
   const [openImg, setOpenImg] = useState(false);
   const handleOpenImg = () => setOpenImg(true);
   const handleCloseImg = () => setOpenImg(false);
@@ -46,21 +46,22 @@ function FormConfirmationContainer() {
     return (
       data.name.trim() !== '' &&
       data.email.trim() !== '' &&
-      (data.guest !== 1 || data.guest_name.trim() !== '') && // Valida guest_name solo si data.guest es 1
+      (data.guest !== 2 || data.guest_name.trim() !== '') && // Valida guest_name solo si data.guest es 1
       data.phone.trim() !== '' &&
       data.message.trim() !== ''
     );
   };
 
   const handleSave = async () => {
+    setIsQr(Boolean(data.guest));
     handleClose()
     handleOpenImg();
-    setIsQr(!!data.guest);
     setData(INIT);
+
     try {
       const response = await axios.post(BASE_URL, data);
-
-      return response.data; // Se asume que la respuesta contiene un `data` con los datos que necesitas
+      setQRValue(`${location.href}/${response.data.hash}`)
+      return response.data;
     } catch (error) {
       handleClose()
       console.error('Error posting guests:', error);
@@ -75,20 +76,29 @@ function FormConfirmationContainer() {
 
   const ImageDialog: React.FC<ImageDialogProps> = ({ open, onClose }) => {
     return (
-      <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
+      <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth className="relative">
         <DialogContent>
           <IconButton
             edge="end"
             color="inherit"
             onClick={onClose}
             aria-label="close"
-            style={{ position: 'absolute', right: 8, top: 8 }} // Estilo para posicionar el botón
+            style={{ position: 'absolute', right: 20, top: 10 }} // Estilo para posicionar el botón
           >
             <CloseIcon />
           </IconButton>
-          {isQr ?
-            <Image src={imgYesQr} alt="Dialog" /> :
-            <Image src={imgNoQr} alt="Dialog" />}
+          <div className="flex justify-center items-center relative">
+
+            {isQr ?
+              <Image src={imgYesQr} alt="Dialog" className="w-[500px]" /> :
+              <Image src={imgNoQr} alt="Dialog" className="w-[300px]" />}
+
+            {isQr && QRValue && (
+              <div className="bg-white absolute ">
+                <QRCode value={QRValue} className="m-auto" width={400}/>
+              </div>
+            )}
+          </div>
         </DialogContent>
       </Dialog>
     );
@@ -101,9 +111,9 @@ function FormConfirmationContainer() {
       </div>
 
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Confirma tu asistencia</DialogTitle>
+        <DialogTitle className="text-center">Confirma tu asistencia</DialogTitle>
         <DialogContent>
-          <Typography className="text-red-700">Evento no permitido con niños</Typography>
+          <Typography className="text-red-700 text-center">Evento no permitido con niños</Typography>
           <DialogContentText>
             <form className="bg-white p-5 grid gap-3 w-72">
               <TextField size="small" label="Nombre(s)" variant="outlined" value={data.name} onChange={handleChange('name')} />
@@ -120,11 +130,12 @@ function FormConfirmationContainer() {
                   size="small"
                 >
                   <MenuItem value={0}>No asistire</MenuItem>
-                  <MenuItem value={1}>Un invitado</MenuItem>
+                  <MenuItem value={1}>Sin invitado</MenuItem>
+                  <MenuItem value={2}>Un invitado</MenuItem>
                 </Select>
               </FormControl>
 
-              {data.guest ? (
+              {data.guest == 2 ? (
                 <TextField size="small" label="Nombre del invitado" variant="outlined" value={data.guest_name} onChange={handleChange('guest_name')} />
               ) : null}
 

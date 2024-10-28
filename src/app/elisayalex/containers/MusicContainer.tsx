@@ -11,13 +11,11 @@ const MusicContainer: React.FC = () => {
         setTimeout(() => {
             console.log("Retrasado por 10 segundo.");
             playAudio()
-        }, 1000);
+        }, 3000);
 
 
         if (audioElement) {
             // Evento para cuando los datos del audio se han cargado
-
-
 
             return () => {
                 if (audioElement) {
