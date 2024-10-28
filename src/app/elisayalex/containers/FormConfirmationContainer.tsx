@@ -55,17 +55,16 @@ function FormConfirmationContainer() {
   const handleSave = async () => {
     setIsQr(Boolean(data.guest));
     handleClose()
-    handleOpenImg();
     setData(INIT);
-
     try {
       const response = await axios.post(BASE_URL, data);
       setQRValue(`${location.href}/${response.data.hash}`)
+      handleOpenImg(); 
       return response.data;
     } catch (error) {
       handleClose()
       console.error('Error posting guests:', error);
-      throw error; // Re-lanza el error para manejo posterior
+      throw error; // Re-lanza el error para mansejo posterior
     }
   }
 
@@ -77,11 +76,11 @@ function FormConfirmationContainer() {
   const ImageDialog: React.FC<ImageDialogProps> = ({ open, onClose }) => {
     return (
       <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth className="relative">
-        <DialogContent>
+        <DialogContent    onClick={onClose}>
           <IconButton
             edge="end"
             color="inherit"
-            onClick={onClose}
+      
             aria-label="close"
             style={{ position: 'absolute', right: 20, top: 10 }} // Estilo para posicionar el botón
           >
@@ -89,14 +88,15 @@ function FormConfirmationContainer() {
           </IconButton>
           <div className="flex justify-center items-center relative">
 
-            {isQr ?
-              <Image src={imgYesQr} alt="Dialog" className="w-[500px]" /> :
-              <Image src={imgNoQr} alt="Dialog" className="w-[300px]" />}
+            {!isQr && <Image src={imgNoQr} alt="Dialog" className="w-[300px]" />}
 
             {isQr && QRValue && (
-              <div className="bg-white absolute ">
-                <QRCode value={QRValue} className="m-auto" width={200}/>
-              </div>
+              <>
+                <Image src={imgYesQr} alt="Dialog" className="w-[500px]" />
+                <div className="bg-white absolute w-[200px] h-[200px] flex justify-center items-center">
+                  <QRCode value={QRValue} className="m-auto" />
+                </div>
+              </>
             )}
           </div>
         </DialogContent>
