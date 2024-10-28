@@ -76,24 +76,15 @@ function FormConfirmationContainer() {
   const ImageDialog: React.FC<ImageDialogProps> = ({ open, onClose }) => {
     return (
       <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth className="relative">
-        <DialogContent    onClick={onClose}>
-          <IconButton
-            edge="end"
-            color="inherit"
-      
-            aria-label="close"
-            style={{ position: 'absolute', right: 20, top: 10 }} // Estilo para posicionar el botón
-          >
-            <CloseIcon />
-          </IconButton>
-          <div className="flex justify-center items-center relative">
+        <DialogContent  onClick={onClose}>
+                   <div className="flex justify-center items-center relative">
 
             {!isQr && <Image src={imgNoQr} alt="Dialog" className="w-[300px]" />}
 
             {isQr && QRValue && (
               <>
                 <Image src={imgYesQr} alt="Dialog" className="w-[500px]" />
-                <div className="bg-white absolute w-[200px] h-[200px] flex justify-center items-center">
+                <div className=" absolute w-2/5 flex justify-center items-center">
                   <QRCode value={QRValue} className="m-auto" />
                 </div>
               </>
