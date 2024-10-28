@@ -1,11 +1,11 @@
-import { FormControl, InputLabel, Select, TextField, Typography } from "@mui/material"
+import { FormControl, IconButton, InputLabel, Select, TextField, Typography } from "@mui/material"
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, MenuItem } from '@mui/material';
 import React, { useState } from 'react';
 import axios from 'axios';
 import imgYesQr from '../assets/yesQr.png'; // Importa la imagen
 import imgNoQr from '../assets/noQr.png'; // Importa la imagen
-
 import Image from 'next/image';
+import CloseIcon from '@mui/icons-material/Close'; // Importa el ícono de cerrar
 
 const BASE_URL = 'https://robertorequena.mx/api/A007/guests';
 const INIT = {
@@ -19,6 +19,7 @@ const INIT = {
 function FormConfirmationContainer() {
   const [open, setOpen] = useState<boolean>(false);
   const [data, setData] = useState(INIT)
+  const [isQr, setIsQr] = useState(false);
 
   const [openImg, setOpenImg] = useState(false);
   const handleOpenImg = () => setOpenImg(true);
@@ -54,9 +55,11 @@ function FormConfirmationContainer() {
   const handleSave = async () => {
     handleClose()
     handleOpenImg();
+    setIsQr(!!data.guest);
+    setData(INIT);
     try {
       const response = await axios.post(BASE_URL, data);
-      setData(INIT)
+
       return response.data; // Se asume que la respuesta contiene un `data` con los datos que necesitas
     } catch (error) {
       handleClose()
@@ -74,7 +77,16 @@ function FormConfirmationContainer() {
     return (
       <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
         <DialogContent>
-          {data.guest ?
+          <IconButton
+            edge="end"
+            color="inherit"
+            onClick={onClose}
+            aria-label="close"
+            style={{ position: 'absolute', right: 8, top: 8 }} // Estilo para posicionar el botón
+          >
+            <CloseIcon />
+          </IconButton>
+          {isQr ?
             <Image src={imgYesQr} alt="Dialog" /> :
             <Image src={imgNoQr} alt="Dialog" />}
         </DialogContent>
